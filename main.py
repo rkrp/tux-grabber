@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  untitled.py
+#  main.py
 #  
 #  Copyright 2013 Krishna Ram <geekytux@fox>
 #  
@@ -36,12 +36,17 @@ def main():
 	target="http://localhost/projects/"
 	doc=fetchDoc(target)
 	pDoc=BeautifulSoup(doc)
-	url=[]
+	urlList=[]
 	for link in pDoc.html.body.table.findAll("a"):
-		url.append(target+link.get('href'));
-	completeUrl=url[5:len(url):1]
-	print completeUrl
-
+		compUrl=target+link.get('href')
+		urlList.append([])
+		urlList[-1].append(compUrl)
+		if compUrl[-1:]=='/':
+			urlList[-1].append(True)
+		else:
+			urlList[-1].append(False)
+	
+	print urlList
 if __name__ == '__main__':
 	main()
 	
