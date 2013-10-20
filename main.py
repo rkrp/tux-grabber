@@ -36,17 +36,16 @@ def main():
 	target="http://localhost/projects/"
 	doc=fetchDoc(target)
 	pDoc=BeautifulSoup(doc)
-	urlList=[]
+	dirList=[]
+	fileList=[]
 	for link in pDoc.html.body.table.findAll("a"):
 		compUrl=target+link.get('href')
-		urlList.append([])
-		urlList[-1].append(compUrl)
 		if compUrl[-1:]=='/':
-			urlList[-1].append(True)
+			dirList.append(compUrl)
 		else:
-			urlList[-1].append(False)
+			fileList.append(compUrl)
+	print fileList
 	
-	print urlList
 if __name__ == '__main__':
 	main()
 	
