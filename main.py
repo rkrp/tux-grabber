@@ -38,7 +38,7 @@ def startGrabbing(target):
 	fileList=[]
 	
 	try:
-		for link in pDoc.html.body.table.findAll("a"):
+		for link in pDoc.html.body.findAll("a"):
 			#Checking whether URL is valid
 			if isValidUrl(link.get('href'))==False:
 				continue;
@@ -52,7 +52,7 @@ def startGrabbing(target):
 	except:
 		return
 	#output
-	printList(target,[],fileList)
+	printList(target,dirList,fileList)
 	
 	#Grabbing the subdirs		
 	for subDir in dirList:
@@ -60,6 +60,7 @@ def startGrabbing(target):
 		#~ print target+subDir
 
 def fetchDoc(url):
+	print "getting from "+url
 	r=requests.get(url);
 	if r.status_code != 200:
 		print "Cannot fetch Document!"
@@ -84,7 +85,7 @@ def printList(target,dirList,fileList):
 			print dirName
 
 def main():
-	target="http://www.kernel.org/pub/"
+	target="http://kernel.org/pub/"
 	startGrabbing(target)
 	
 	
