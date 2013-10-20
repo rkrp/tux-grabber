@@ -32,6 +32,12 @@ def fetchDoc(url):
 		exit;
 	return r.text
 
+def isValidUrl(url):
+	if url[:1]=='?' or url=='/':
+		return False
+	else:
+		return True;
+
 def main():
 	target="http://localhost/projects/"
 	doc=fetchDoc(target)
@@ -39,12 +45,16 @@ def main():
 	dirList=[]
 	fileList=[]
 	for link in pDoc.html.body.table.findAll("a"):
+		if isValidUrl(link.get('href'))==False:
+			continue;
 		compUrl=target+link.get('href')
 		if compUrl[-1:]=='/':
 			dirList.append(compUrl)
 		else:
 			fileList.append(compUrl)
 	print fileList
+	print dirList
+	
 	
 if __name__ == '__main__':
 	main()
