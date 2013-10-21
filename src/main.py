@@ -23,6 +23,7 @@
 #  
 
 import requests
+import sys
 from bs4 import BeautifulSoup
 
 def startGrabbing(target):
@@ -52,10 +53,10 @@ def startGrabbing(target):
 	except:
 		return
 	#output
-	#~ printList(target,dirList,fileList)
+	printList(target,dirList,fileList)
 	
-	for targetFile in fileList:
-		download_file(targetFile)
+	#~ for targetFile in fileList:
+		#~ download_file(targetFile)
 	
 	#Grabbing the subdirs		
 	for subDir in dirList:
@@ -99,7 +100,13 @@ def download_file(url):
 	return local_filename
 
 def main():
-	target="http://localhost/projects/Dem/"
+	if len(sys.argv)==1:
+		target="http://localhost/"
+	else:
+		target=sys.argv[1]
+		#Fixing if user misses / in the end of dir
+		if target[-1] != '/':
+			target=target+'/'
 	startGrabbing(target)
 	
 	
