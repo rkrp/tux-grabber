@@ -23,7 +23,7 @@
 #  
 
 import requests
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 
 def startGrabbing(target):
 	doc=fetchDoc(target)
@@ -52,7 +52,10 @@ def startGrabbing(target):
 	except:
 		return
 	#output
-	printList(target,dirList,fileList)
+	#~ printList(target,dirList,fileList)
+	
+	for targetFile in fileList:
+		download_file(targetFile)
 	
 	#Grabbing the subdirs		
 	for subDir in dirList:
@@ -84,8 +87,19 @@ def printList(target,dirList,fileList):
 		for dirName in dirList:
 			print dirName
 
+def download_file(url):
+	local_filename = url.split('/')[-1]
+	print "downloading "+url
+	r = requests.get(url, stream=True)
+	with open(local_filename, 'wb') as f:
+		for chunk in r.iter_content(chunk_size=1024): 
+			if chunk: # filter out keep-alive new chunks
+				f.write(chunk)
+				f.flush()
+	return local_filename
+
 def main():
-	target="http://kernel.org/pub/"
+	target="http://localhost/projects/Dem/"
 	startGrabbing(target)
 	
 	
