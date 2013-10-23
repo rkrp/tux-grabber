@@ -53,10 +53,11 @@ def startGrabbing(target):
 	except:
 		return
 	#output
-	printList(target,dirList,fileList)
+	#~ printList(target,dirList,fileList)
 	
-	#~ for targetFile in fileList:
-		#~ download_file(targetFile)
+	for targetFile in fileList:
+		print "Downloading " + targetFile.split('/')[-1] + " ..."
+		download_file(targetFile)
 	
 	#Grabbing the subdirs		
 	for subDir in dirList:
@@ -90,7 +91,6 @@ def printList(target,dirList,fileList):
 
 def download_file(url):
 	local_filename = url.split('/')[-1]
-	print "downloading "+url
 	r = requests.get(url, stream=True)
 	with open(local_filename, 'wb') as f:
 		for chunk in r.iter_content(chunk_size=1024): 
